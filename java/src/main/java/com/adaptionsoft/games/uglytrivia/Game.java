@@ -102,38 +102,32 @@ public class Game {
 
 
     private String currentCategory() {
-        if (places[currentPlayer] == 0) return "Pop";
-        if (places[currentPlayer] == 4) return "Pop";
-        if (places[currentPlayer] == 8) return "Pop";
-        if (places[currentPlayer] == 1) return "Science";
-        if (places[currentPlayer] == 5) return "Science";
-        if (places[currentPlayer] == 9) return "Science";
-        if (places[currentPlayer] == 2) return "Sports";
-        if (places[currentPlayer] == 6) return "Sports";
-        if (places[currentPlayer] == 10) return "Sports";
+        if (places[currentPlayer] == 0 || places[currentPlayer] == 4 || places[currentPlayer] == 8) return "Pop";
+        if (places[currentPlayer] == 1 || places[currentPlayer] == 5 || places[currentPlayer] == 9) return "Science";
+        if (places[currentPlayer] == 2 || places[currentPlayer] == 6 || places[currentPlayer] == 10) return "Sports";
         return "Rock";
     }
 
     public boolean wasCorrectlyAnswered() {
         if (inPenaltyBox[currentPlayer]) {
             if (isGettingOutOfPenaltyBox) {
-                return answerCorrect("Answer was correct!!!!");
+                return answerCorrect();
             } else {
                 return incrementCurrentPlayer();
             }
         } else {
-            return answerCorrect("Answer was corrent!!!!");
+            return answerCorrect();
         }
     }
 
-    private boolean answerCorrect(String s) {
-        System.out.println(s);
+    private boolean answerCorrect() {
+        System.out.println("Answer was corrent!!!!");
         purses[currentPlayer]++;
         System.out.println(players.get(currentPlayer)
                 + " now has "
                 + purses[currentPlayer]
                 + " Gold Coins.");
-        boolean winner = didPlayerWin();
+        boolean winner = shouldGameContinue();
         currentPlayer++;
         if (currentPlayer == players.size()) currentPlayer = 0;
         return winner;
@@ -153,7 +147,7 @@ public class Game {
     }
 
 
-    private boolean didPlayerWin() {
-        return !(purses[currentPlayer] == 6);
+    private boolean shouldGameContinue() {
+        return (purses[currentPlayer] != 6);
     }
 }
