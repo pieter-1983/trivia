@@ -176,14 +176,14 @@ public class GameRunnerTest {
                 "Pat's new location is 1\r\n" +
                 "The category is Science\r\n" +
                 "Science Question 0\r\n" +
-                "Answer was corrent!!!!\r\n" +
+                "Answer was correct!!!!\r\n" +
                 "Pat now has 1 Gold Coins.\r\n" +
                 "Sue is the current player\r\n" +
                 "They have rolled a 6\r\n" +
                 "Sue's new location is 6\r\n" +
                 "The category is Sports\r\n" +
                 "Sports Question 0\r\n" +
-                "Answer was corrent!!!!\r\n" +
+                "Answer was correct!!!!\r\n" +
                 "Sue now has 1 Gold Coins.\r\n" +
                 "Chet is the current player\r\n" +
                 "They have rolled a 3\r\n" +
@@ -205,7 +205,7 @@ public class GameRunnerTest {
                 "Sue's new location is 7\r\n" +
                 "The category is Rock\r\n" +
                 "Rock Question 1\r\n" +
-                "Answer was corrent!!!!\r\n" +
+                "Answer was correct!!!!\r\n" +
                 "Sue now has 2 Gold Coins.\r\n" +
                 "Chet is the current player\r\n" +
                 "They have rolled a 6\r\n" +
