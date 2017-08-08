@@ -15,7 +15,7 @@ public class Game {
     private LinkedList<String> rockQuestions = new LinkedList<>();
     private int currentPlayer = 0;
     private boolean isGettingOutOfPenaltyBox;
-    private Console console = new Console();
+    private Console console;
 
     public Game() {
         for (int i = 0; i < 50; i++) {
@@ -24,6 +24,7 @@ public class Game {
             sportsQuestions.addLast(createSportQuestion(i));
             rockQuestions.addLast(createRockQuestion(i));
         }
+        console = new Console();
     }
 
     private String createPopQuestion(int index) {
@@ -51,7 +52,7 @@ public class Game {
         places[howManyPlayers()] = 0;
         purses[howManyPlayers()] = 0;
         inPenaltyBox[howManyPlayers()] = false;
-        console.printAddingPlayer(playerName);
+        console.printAddingPlayer(playerName, players.size());
         return true;
     }
 
@@ -67,8 +68,10 @@ public class Game {
             if (isGettingOutOfPenaltyBox) {
                 console.printGetsOutOfPenaltyBox(currentPlayerName);
                 places[currentPlayer] = places[currentPlayer] + roll;
-                if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
-                console.printPlayersLocationAndCategory(currentPlayerName);
+                if (places[currentPlayer] > 11) {
+                    places[currentPlayer] = places[currentPlayer] - 12;
+                }
+                console.printPlayersLocationAndCategory(currentPlayerName, places[currentPlayer], currentCategory());
                 askQuestion();
             } else {
                 console.printStaysInPenaltyBox(currentPlayerName);
@@ -77,7 +80,7 @@ public class Game {
         } else {
             places[currentPlayer] = places[currentPlayer] + roll;
             if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
-            console.printPlayersLocationAndCategory(currentPlayerName);
+            console.printPlayersLocationAndCategory(currentPlayerName, places[currentPlayer], currentCategory());
             askQuestion();
         }
     }
@@ -124,7 +127,7 @@ public class Game {
 
     private boolean answerCorrect() {
         incrementGoldCoins();
-        console.printCorrectAnswerAndGoldCoins();
+        console.printCorrectAnswerAndGoldCoins(players.get(currentPlayer), purses[currentPlayer]);
         boolean winner = shouldGameContinue();
         incrementCurrentPlayer();
         return winner;
@@ -135,7 +138,7 @@ public class Game {
     }
 
     public boolean wrongAnswer() {
-        console.printWrongAnswerAndSentToPenaltyBox();
+        console.printWrongAnswerAndSentToPenaltyBox(players.get(currentPlayer));
         inPenaltyBox[currentPlayer] = true;
         incrementCurrentPlayer();
         return true;
@@ -151,44 +154,4 @@ public class Game {
         return (purses[currentPlayer] != 6);
     }
 
-    private class Console {
-
-        private void printAddingPlayer(String playerName) {
-            System.out.println(playerName + " was added");
-            System.out.println("They are player number " + players.size());
-        }
-
-        private void printStaysInPenaltyBox(String currentPlayerName) {
-            System.out.println(currentPlayerName + " is not getting out of the penalty box");
-        }
-
-        private void printGetsOutOfPenaltyBox(String currentPlayerName) {
-            System.out.println(currentPlayerName + " is getting out of the penalty box");
-        }
-
-        private void printPlayerAndRoll(int roll, String currentPlayerName) {
-            System.out.println(currentPlayerName + " is the current player");
-            System.out.println("They have rolled a " + roll);
-        }
-
-        private void printPlayersLocationAndCategory(String currentPlayerName) {
-            System.out.println(currentPlayerName
-                    + "'s new location is "
-                    + places[currentPlayer]);
-            System.out.println("The category is " + currentCategory());
-        }
-
-        private void printCorrectAnswerAndGoldCoins() {
-            System.out.println("Answer was correct!!!!");
-            System.out.println(players.get(currentPlayer)
-                    + " now has "
-                    + purses[currentPlayer]
-                    + " Gold Coins.");
-        }
-
-        private void printWrongAnswerAndSentToPenaltyBox() {
-            System.out.println("Question was incorrectly answered");
-            System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
-        }
-    }
 }
