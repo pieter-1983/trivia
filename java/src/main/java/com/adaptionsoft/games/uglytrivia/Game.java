@@ -61,10 +61,10 @@ public class Game {
 
     public void roll(int roll) {
         String currentPlayerName = players.get(currentPlayer);
+        isGettingOutOfPenaltyBox = isRollUneven(roll);
         console.printPlayerAndRoll(roll, currentPlayerName);
         if (isPlayerInPenaltybox()) {
-            if (playerGetsOutOfPenaltyBox(roll)) {
-                isGettingOutOfPenaltyBox = true;
+            if (isGettingOutOfPenaltyBox) {
                 console.printGetsOutOfPenaltyBox(currentPlayerName);
                 places[currentPlayer] = places[currentPlayer] + roll;
                 if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
@@ -82,7 +82,7 @@ public class Game {
         }
     }
 
-    private boolean playerGetsOutOfPenaltyBox(int roll) {
+    private boolean isRollUneven(int roll) {
         return roll % 2 != 0;
     }
 
@@ -123,11 +123,15 @@ public class Game {
     }
 
     private boolean answerCorrect() {
-        purses[currentPlayer]++;
+        incrementGoldCoins();
         console.printCorrectAnswerAndGoldCoins();
         boolean winner = shouldGameContinue();
         incrementCurrentPlayer();
         return winner;
+    }
+
+    private void incrementGoldCoins() {
+        purses[currentPlayer]++;
     }
 
     public boolean wrongAnswer() {
